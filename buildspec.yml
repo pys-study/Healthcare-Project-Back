@@ -2,10 +2,10 @@
 version: 0.2
 env:
   variables:
-    AWS_DEFAULT_REGION: "ap-northeast-2"
-    AWS_ACCOUNT_ID: "289850138235"
-    IMAGE_REPO_NAME: "hwp"
-    IMAGE_TAG: "hwp_springboot_backend"
+    AWS_DEFAULT_REGION: ap-northeast-2
+    AWS_ACCOUNT_ID: 289850138235
+    IMAGE_REPO_NAME: hwp
+    IMAGE_TAG: hwp_springboot_backend
 phases:
   pre_build:
     commands:

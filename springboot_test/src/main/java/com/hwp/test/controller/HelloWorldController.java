@@ -16,6 +16,6 @@ public class HelloWorldController {
         return String.format("Hello World, %s", id);
     }
 
-    @GetMapping("/hello-world-CICD")
+    @GetMapping("/hello-world-test")
     public String helloWorldCICD() { return "CI/CD TEST COMPLETE"; }
 }

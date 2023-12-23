@@ -29,5 +29,5 @@ phases:
       - aws s3 cp s3://hwp-cicd/codedeploy/scripts/codedeploy.sh ./scripts/codedeploy.sh
 artifacts:
   files:
-    - appspec.yml
-    - scripts/codedeploy.sh
+    - ./appspec.yml
+    - ./scripts/codedeploy.sh

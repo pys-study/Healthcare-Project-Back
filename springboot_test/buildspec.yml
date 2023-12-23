@@ -24,7 +24,3 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 289850138235.dkr.ecr.ap-northeast-2.amazonaws.com/hwp:latest
-artifacts:
-  files:
-    - appspec.yml
-    - scripts/**/*

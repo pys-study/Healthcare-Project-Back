@@ -1,6 +1,12 @@
 package com.hwpBackend.hwpSpring.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class DietInfo {
+
+    @Id
     private int DietInfoID;
     private String DietName;
     private int Calories;

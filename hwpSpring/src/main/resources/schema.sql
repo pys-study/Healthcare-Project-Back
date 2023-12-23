@@ -1,5 +1,5 @@
 -- Members 테이블
-CREATE TABLE Members (
+CREATE TABLE Member (
     ID VARCHAR(255) PRIMARY KEY NOT NULL,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(255),
@@ -27,7 +27,7 @@ CREATE TABLE ExerciseRecord (
     CountPerSets INT,
     Sets INT,
     TotalCalories INT,
-    FOREIGN KEY (MemberID) REFERENCES Members(ID),
+    FOREIGN KEY (MemberID) REFERENCES Member(ID),
     FOREIGN KEY (ExerciseInfoID) REFERENCES ExerciseInfo(ExerciseInfoID)
 );
 
@@ -49,6 +49,6 @@ CREATE TABLE DietRecord (
     Record DATE,
     TimeOfMeal VARCHAR(255),
     TotalCalories INT,
-    FOREIGN KEY (MemberID) REFERENCES Members(ID),
+    FOREIGN KEY (MemberID) REFERENCES Member(ID),
     FOREIGN KEY (DietInfoID) REFERENCES DietInfo(DietInfoID)
 );

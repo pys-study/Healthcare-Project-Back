@@ -1,9 +1,14 @@
 package com.hwpBackend.hwpSpring.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.Date;
 
+@Entity
 public class ExerciseRecord {
 
+    @Id
     private int RecordID;
     private String MemberID;
     private int ExerciseInfoID;
@@ -11,12 +16,12 @@ public class ExerciseRecord {
     private int DurationMinutes;
     private int Weight;
     private int CountPerSets;
-    private int Set;
+    private int Sets;
     private int TotalCalories;
 
     // constructor
     public ExerciseRecord(int recordID, String memberID, int exerciseInfoID, Date recordDate,
-                          int durationMinutes, int weight, int countPerSets, int set, int totalCalories) {
+                          int durationMinutes, int weight, int countPerSets, int sets, int totalCalories) {
         RecordID = recordID;
         MemberID = memberID;
         ExerciseInfoID = exerciseInfoID;
@@ -24,7 +29,7 @@ public class ExerciseRecord {
         DurationMinutes = durationMinutes;
         Weight = weight;
         CountPerSets = countPerSets;
-        Set = set;
+        Sets = sets;
         TotalCalories = totalCalories;
     }
 
@@ -70,9 +75,7 @@ public class ExerciseRecord {
         DurationMinutes = durationMinutes;
     }
 
-    public int getWeight() {
-        return Weight;
-    }
+    public int getWeight() { return Weight; }
 
     public void setWeight(int weight) {
         Weight = weight;
@@ -86,12 +89,12 @@ public class ExerciseRecord {
         CountPerSets = countPerSets;
     }
 
-    public int getSet() {
-        return Set;
+    public int getSets() {
+        return Sets;
     }
 
-    public void setSet(int set) {
-        Set = set;
+    public void setSets(int sets) {
+        Sets = sets;
     }
 
     public int getTotalCalories() {

@@ -1,7 +1,12 @@
 package com.hwpBackend.hwpSpring.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class ExerciseInfo {
 
+    @Id
     private int ExerciseInfoID;
     private String ExerciseType;
     private String ExerciseName;

@@ -1,6 +1,14 @@
 package com.hwpBackend.hwpSpring.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Member {
+    public Member() {
+    }
+
+    @Id
     private String ID;
     private String Password;
     private String Email;

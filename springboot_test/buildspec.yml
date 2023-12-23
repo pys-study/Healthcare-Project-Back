@@ -24,7 +24,10 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 289850138235.dkr.ecr.ap-northeast-2.amazonaws.com/hwp:latest
+      - echo "Build phase"
+      - aws s3 cp s3://hwp-cicd/codedeploy/appspec.yml ./appspec.yml
+      - aws s3 cp s3://hwp-cicd/codedeploy/scripts/codedeploy.sh ./scripts/codedeploy.sh
 artifacts:
   files:
-    - /appspec.yml
+    - appspec.yml
     - scripts/codedeploy.sh

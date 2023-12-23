@@ -24,9 +24,6 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 289850138235.dkr.ecr.ap-northeast-2.amazonaws.com/hwp:latest
-      - mkdir -p scripts
-      - echo "content of appspec.yml" > appspec.yml
-      - echo "content of codedeploy.sh" > scripts/codedeploy.sh
 artifacts:
   files:
     - appspec.yml

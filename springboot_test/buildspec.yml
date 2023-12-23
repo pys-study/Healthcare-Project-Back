@@ -26,5 +26,5 @@ phases:
       - docker push 289850138235.dkr.ecr.ap-northeast-2.amazonaws.com/hwp:latest
 artifacts:
   files:
-    - appspec.yml
-    - scripts/**
+    - ../springboot_test/appspec.yml
+    - ../springboot_test/scripts/**

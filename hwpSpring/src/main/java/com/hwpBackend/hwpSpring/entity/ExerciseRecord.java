@@ -3,6 +3,7 @@ package com.hwpBackend.hwpSpring.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
@@ -10,8 +11,11 @@ import java.util.Date;
 public class ExerciseRecord {
 
     @Id
+    @GeneratedValue
     private int RecordID;
+    @ManyToOne
     private String MemberID;
+    @ManyToOne
     private int ExerciseInfoID;
     private Date RecordDate;
     private int DurationMinutes;

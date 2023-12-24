@@ -1,13 +1,13 @@
 package com.hwpBackend.hwpSpring.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
 public class Member {
     public Member() {
     }
-
     @Id
     private String ID;
     private String Password;
@@ -42,49 +42,31 @@ public class Member {
         return ID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
 
     public String getPassword() {
         return Password;
     }
 
-    public void setPassword(String password) {
-        Password = password;
-    }
 
     public String getEmail() {
         return Email;
     }
 
-    public void setEmail(String email) {
-        Email = email;
-    }
 
     public String getName() {
         return Name;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
 
     public int getAge() {
         return Age;
     }
 
-    public void setAge(int age) {
-        Age = age;
-    }
 
     public String getGender() {
         return Gender;
     }
 
-    public void setGender(String gender) {
-        Gender = gender;
-    }
 
 
 }

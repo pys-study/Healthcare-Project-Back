@@ -1,12 +1,14 @@
 package com.hwpBackend.hwpSpring.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
 public class DietInfo {
 
     @Id
+    @GeneratedValue
     private int DietInfoID;
     private String DietName;
     private int Calories;
@@ -29,47 +31,29 @@ public class DietInfo {
         return DietInfoID;
     }
 
-    public void setDietInfoID(int dietInfoID) {
-        DietInfoID = dietInfoID;
-    }
 
     public String getDietName() {
         return DietName;
     }
 
-    public void setDietName(String dietName) {
-        DietName = dietName;
-    }
 
     public int getCalories() {
         return Calories;
     }
 
-    public void setCalories(int calories) {
-        Calories = calories;
-    }
 
     public int getCarbohydrate() {
         return Carbohydrate;
     }
 
-    public void setCarbohydrate(int carbohydrate) {
-        Carbohydrate = carbohydrate;
-    }
 
     public int getProtein() {
         return Protein;
     }
 
-    public void setProtein(int protein) {
-        Protein = protein;
-    }
 
     public int getFats() {
         return Fats;
     }
 
-    public void setFats(int fats) {
-        Fats = fats;
-    }
 }

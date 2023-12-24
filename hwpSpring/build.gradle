@@ -21,8 +21,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:3.2.1'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+//	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 }
 
 tasks.named('test') {

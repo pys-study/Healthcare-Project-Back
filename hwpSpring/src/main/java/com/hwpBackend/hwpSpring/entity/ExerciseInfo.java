@@ -1,12 +1,14 @@
 package com.hwpBackend.hwpSpring.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
 public class ExerciseInfo {
 
     @Id
+    @GeneratedValue
     private int ExerciseInfoID;
     private String ExerciseType;
     private String ExerciseName;
@@ -26,31 +28,19 @@ public class ExerciseInfo {
         return ExerciseInfoID;
     }
 
-    public void setExerciseInfoID(int exerciseInfoID) {
-        ExerciseInfoID = exerciseInfoID;
-    }
 
     public String getExerciseType() {
         return ExerciseType;
     }
 
-    public void setExerciseType(String exerciseType) {
-        ExerciseType = exerciseType;
-    }
 
     public String getExerciseName() {
         return ExerciseName;
     }
 
-    public void setExerciseName(String exerciseName) {
-        ExerciseName = exerciseName;
-    }
 
     public String getCaloriesPerMinutes() {
         return CaloriesPerMinutes;
     }
 
-    public void setCaloriesPerMinutes(String caloriesPerMinutes) {
-        CaloriesPerMinutes = caloriesPerMinutes;
-    }
 }

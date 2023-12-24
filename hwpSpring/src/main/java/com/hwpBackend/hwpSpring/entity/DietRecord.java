@@ -1,6 +1,7 @@
 package com.hwpBackend.hwpSpring.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 public class DietRecord {
 
     @Id
+    @GeneratedValue
     private int DietRecordID;
     private String MemberID;
     private int DietInfoID;
@@ -31,47 +33,29 @@ public class DietRecord {
         return DietRecordID;
     }
 
-    public void setDietRecordID(int dietRecordID) {
-        DietRecordID = dietRecordID;
-    }
 
     public String getMemberID() {
         return MemberID;
     }
 
-    public void setMemberID(String memberID) {
-        MemberID = memberID;
-    }
 
     public int getDietInfoID() {
         return DietInfoID;
     }
 
-    public void setDietInfoID(int dietInfoID) {
-        DietInfoID = dietInfoID;
-    }
 
     public Date getRecord() {
         return Record;
     }
 
-    public void setRecord(Date record) {
-        Record = record;
-    }
 
     public String getTimeOfMeal() {
         return TimeOfMeal;
     }
 
-    public void setTimeOfMeal(String timeOfMeal) {
-        TimeOfMeal = timeOfMeal;
-    }
 
     public int getTotalCalories() {
         return TotalCalories;
     }
 
-    public void setTotalCalories(int totalCalories) {
-        TotalCalories = totalCalories;
-    }
 }

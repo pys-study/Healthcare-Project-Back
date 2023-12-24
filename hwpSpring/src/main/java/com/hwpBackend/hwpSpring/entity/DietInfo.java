@@ -3,7 +3,7 @@ package com.hwpBackend.hwpSpring.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-@Entity(name = "diet_info")
+@Entity
 public class DietInfo {
 
     @Id

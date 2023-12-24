@@ -9,7 +9,6 @@ public class Member {
     public Member() {
     }
     @Id
-    @GeneratedValue
     private String ID;
     private String Password;
     private String Email;

@@ -10,7 +10,6 @@ import java.util.Date;
 public class ExerciseRecord {
 
     @Id
-    @GeneratedValue
     private int RecordID;
     private String MemberID;
     private int ExerciseInfoID;

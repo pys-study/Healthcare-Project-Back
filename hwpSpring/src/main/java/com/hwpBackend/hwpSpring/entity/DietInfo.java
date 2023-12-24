@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 public class DietInfo {
 
     @Id
-    @GeneratedValue
     private int DietInfoID;
     private String DietName;
     private int Calories;

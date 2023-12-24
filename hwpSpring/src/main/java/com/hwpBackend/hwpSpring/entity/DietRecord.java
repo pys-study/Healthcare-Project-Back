@@ -10,7 +10,6 @@ import java.util.Date;
 public class DietRecord {
 
     @Id
-    @GeneratedValue
     private int DietRecordID;
     private String MemberID;
     private int DietInfoID;

@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 public class ExerciseInfo {
 
     @Id
-    @GeneratedValue
     private int ExerciseInfoID;
     private String ExerciseType;
     private String ExerciseName;

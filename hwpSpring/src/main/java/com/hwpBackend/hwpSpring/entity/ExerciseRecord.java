@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 
 import java.util.Date;
 
-@Entity
+@Entity(name = "exercise_record")
 public class ExerciseRecord {
 
     @Id
@@ -75,7 +75,9 @@ public class ExerciseRecord {
         DurationMinutes = durationMinutes;
     }
 
-    public int getWeight() { return Weight; }
+    public int getWeight() {
+        return Weight;
+    }
 
     public void setWeight(int weight) {
         Weight = weight;

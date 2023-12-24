@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 
 import java.util.Date;
 
-@Entity
+@Entity(name = "diet_record")
 public class DietRecord {
 
     @Id

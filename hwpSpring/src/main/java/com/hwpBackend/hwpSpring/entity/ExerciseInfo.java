@@ -12,7 +12,7 @@ public class ExerciseInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ExerciseInfoID;
+    private Integer ExerciseInfoID = 0;
     private String ExerciseType;
     private String ExerciseName;
     private Integer CaloriesPerMinutes;

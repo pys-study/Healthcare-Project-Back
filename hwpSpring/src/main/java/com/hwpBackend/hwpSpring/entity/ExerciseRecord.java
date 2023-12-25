@@ -30,9 +30,8 @@ public class ExerciseRecord {
 
 
     // constructor
-    public ExerciseRecord(Integer recordID, Member member, ExerciseInfo exerciseInfo, LocalDate recordDate,
+    public ExerciseRecord(Member member, ExerciseInfo exerciseInfo, LocalDate recordDate,
                           Integer durationMinutes, Integer weight, Integer countPerSets, Integer sets) {
-        RecordID = recordID;
         this.member = member;
         this.exerciseInfo = exerciseInfo;
         RecordDate = recordDate;

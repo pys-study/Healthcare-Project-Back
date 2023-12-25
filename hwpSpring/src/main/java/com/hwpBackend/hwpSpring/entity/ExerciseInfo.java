@@ -22,8 +22,7 @@ public class ExerciseInfo {
     private List<ExerciseRecord> exerciseRecordList;
 
     // constructor
-    public ExerciseInfo(Integer exerciseInfoID, String exerciseType, String exerciseName, Integer caloriesPerMinutes) {
-        ExerciseInfoID = exerciseInfoID;
+    public ExerciseInfo(String exerciseType, String exerciseName, Integer caloriesPerMinutes) {
         ExerciseType = exerciseType;
         ExerciseName = exerciseName;
         CaloriesPerMinutes = caloriesPerMinutes;

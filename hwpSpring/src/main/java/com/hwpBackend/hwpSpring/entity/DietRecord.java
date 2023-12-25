@@ -27,8 +27,7 @@ public class DietRecord {
     // constructor
 
 
-    public DietRecord(Integer dietRecordID, Member member, DietInfo dietInfo, Date record, String timeOfMeal, Integer totalCalories) {
-        DietRecordID = dietRecordID;
+    public DietRecord(Member member, DietInfo dietInfo, Date record, String timeOfMeal, Integer totalCalories) {
         this.member = member;
         this.dietInfo = dietInfo;
         Record = record;

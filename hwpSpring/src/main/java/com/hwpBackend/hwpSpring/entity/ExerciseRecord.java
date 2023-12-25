@@ -1,87 +1,123 @@
 package com.hwpBackend.hwpSpring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import java.util.Date;
+import javax.naming.Name;
+import java.time.LocalDate;
 
 @Entity
 public class ExerciseRecord {
+    public ExerciseRecord() {
+    }
 
     @Id
-    @GeneratedValue
-    private int RecordID;
-    @ManyToOne
-    private String MemberID;
-    @ManyToOne
-    private int ExerciseInfoID;
-    private Date RecordDate;
-    private int DurationMinutes;
-    private int Weight;
-    private int CountPerSets;
-    private int Sets;
-    private int TotalCalories;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer RecordID; // PK
+    @ManyToOne(fetch = FetchType.LAZY) // 기본값인 FetchType.EAGER 사용 시 운동 세부 정보와 함께 사용자 세부 정보도 같이 가져온다
+    @JsonIgnore
+    private Member member; // FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name="exercise_info_id")
+    private ExerciseInfo exerciseInfo; // FK
+    private LocalDate RecordDate;
+    private Integer DurationMinutes;
+    private Integer Weight;
+    private Integer CountPerSets;
+    private Integer Sets;
+    private Integer TotalCalories;
+
 
     // constructor
-    public ExerciseRecord(int recordID, String memberID, int exerciseInfoID, Date recordDate,
-                          int durationMinutes, int weight, int countPerSets, int sets, int totalCalories) {
+    public ExerciseRecord(Integer recordID, Member member, ExerciseInfo exerciseInfo, LocalDate recordDate,
+                          Integer durationMinutes, Integer weight, Integer countPerSets, Integer sets) {
         RecordID = recordID;
-        MemberID = memberID;
-        ExerciseInfoID = exerciseInfoID;
+        this.member = member;
+        this.exerciseInfo = exerciseInfo;
         RecordDate = recordDate;
         DurationMinutes = durationMinutes;
         Weight = weight;
         CountPerSets = countPerSets;
         Sets = sets;
-        TotalCalories = totalCalories;
+        TotalCalories = exerciseInfo.getCaloriesPerMinutes() * sets;
     }
 
-
     // getter setter
-    public int getRecordID() {
+    public Integer getRecordID() {
         return RecordID;
     }
 
-
-    public String getMemberID() {
-        return MemberID;
-    }
-
-
-    public int getExerciseInfoID() {
-        return ExerciseInfoID;
-    }
-
-
-    public Date getRecordDate() {
+    public LocalDate getRecordDate() {
         return RecordDate;
     }
 
 
-    public int getDurationMinutes() {
+    public Integer getDurationMinutes() {
         return DurationMinutes;
     }
 
 
-    public int getWeight() {
+    public Integer getWeight() {
         return Weight;
     }
 
 
-    public int getCountPerSets() {
+    public Integer getCountPerSets() {
         return CountPerSets;
     }
 
 
-    public int getSets() {
+    public Integer getSets() {
         return Sets;
     }
 
 
-    public int getTotalCalories() {
+    public Integer getTotalCalories() {
         return TotalCalories;
     }
 
+    public Member getMember() {
+        return member;
+    }
+
+    public ExerciseInfo getExerciseInfo() {
+        return exerciseInfo;
+    }
+
+    public void setRecordID(Integer recordID) {
+        RecordID = recordID;
+    }
+
+    public void setRecordDate(LocalDate recordDate) {
+        RecordDate = recordDate;
+    }
+
+    public void setDurationMinutes(Integer durationMinutes) {
+        DurationMinutes = durationMinutes;
+    }
+
+    public void setWeight(Integer weight) {
+        Weight = weight;
+    }
+
+    public void setCountPerSets(Integer countPerSets) {
+        CountPerSets = countPerSets;
+    }
+
+    public void setSets(Integer sets) {
+        Sets = sets;
+    }
+
+    public void setTotalCalories(Integer totalCalories) {
+        TotalCalories = totalCalories;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setExerciseInfo(ExerciseInfo exerciseInfo) {
+        this.exerciseInfo = exerciseInfo;
+    }
 }

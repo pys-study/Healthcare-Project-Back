@@ -13,7 +13,7 @@ public class ExerciseRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer RecordID; // PK
+    private Integer RecordID = 0; // PK
     @ManyToOne(fetch = FetchType.LAZY) // 기본값인 FetchType.EAGER 사용 시 운동 세부 정보와 함께 사용자 세부 정보도 같이 가져온다
     @JsonIgnore
     private Member member; // FK

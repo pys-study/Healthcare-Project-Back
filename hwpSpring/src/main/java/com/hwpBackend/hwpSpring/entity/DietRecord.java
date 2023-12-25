@@ -11,14 +11,14 @@ public class DietRecord {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // PK
-    private Integer DietRecordID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer DietRecordID = 0; // PK
     @ManyToOne(fetch = FetchType.LAZY) // 객체에만 사용 가능
     @JsonIgnore
     private Member member; // FK
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name="diet_info_id")
+    @JoinColumn(name = "diet_info_id")
     private DietInfo dietInfo; // FK
     private Date Record;
     private String TimeOfMeal;

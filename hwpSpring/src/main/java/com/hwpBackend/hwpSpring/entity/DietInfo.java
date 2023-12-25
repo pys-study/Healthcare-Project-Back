@@ -12,7 +12,7 @@ public class DietInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer DietInfoID;
+    private Integer DietInfoID = 0;
     private String DietName;
     private Integer Calories;
     private Integer Carbohydrate;

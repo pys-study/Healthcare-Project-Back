@@ -24,8 +24,7 @@ public class DietInfo {
     private List<DietRecord> dietRecordList;
 
     // constructor
-    public DietInfo(Integer dietInfoID, String dietName, Integer calories, Integer carbohydrate, Integer protein, Integer fats) {
-        DietInfoID = dietInfoID;
+    public DietInfo(String dietName, Integer calories, Integer carbohydrate, Integer protein, Integer fats) {
         DietName = dietName;
         Calories = calories;
         Carbohydrate = carbohydrate;

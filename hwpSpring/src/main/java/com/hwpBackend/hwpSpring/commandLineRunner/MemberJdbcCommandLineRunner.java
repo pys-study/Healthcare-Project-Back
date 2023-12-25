@@ -35,10 +35,12 @@ public class MemberJdbcCommandLineRunner implements CommandLineRunner {
         memberRepository.save(member1);
         memberRepository.save(member2);
 
-        ExerciseInfo exerciseInfo1 = new ExerciseInfo(null,"헬스", "상체", 100);
+        ExerciseInfo exerciseInfo1 = new ExerciseInfo("헬스", "상체", 100);
+        ExerciseInfo exerciseInfo2 = new ExerciseInfo("헬스", "하체", 120);
         exerciseInfoRepository.save(exerciseInfo1);
+        exerciseInfoRepository.save(exerciseInfo2);
 
-        ExerciseRecord exerciseRecord1 = new ExerciseRecord(null, member1, exerciseInfo1, LocalDate.now(), 60, 50, 30, 5);
+        ExerciseRecord exerciseRecord1 = new ExerciseRecord(member1, exerciseInfo1, LocalDate.now(), 60, 50, 30, 5);
         exerciseRecordRepository.save(exerciseRecord1);
 
         System.out.println(memberRepository.findById("aaa"));

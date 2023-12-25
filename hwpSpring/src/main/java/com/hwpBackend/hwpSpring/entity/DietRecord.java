@@ -1,48 +1,45 @@
 package com.hwpBackend.hwpSpring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
 public class DietRecord {
+    public DietRecord() {
+    }
 
     @Id
-    @GeneratedValue
-    private int DietRecordID;
-    private String MemberID;
-    private int DietInfoID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // PK
+    private Integer DietRecordID;
+    @ManyToOne(fetch = FetchType.LAZY) // 객체에만 사용 가능
+    @JsonIgnore
+    private Member member; // FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name="diet_info_id")
+    private DietInfo dietInfo; // FK
     private Date Record;
     private String TimeOfMeal;
-    private int TotalCalories;
+    private Integer TotalCalories;
 
     // constructor
-    public DietRecord(int dietRecordID, String memberID, int dietInfoID, Date record, String timeOfMeal, int totalCalories) {
+
+
+    public DietRecord(Integer dietRecordID, Member member, DietInfo dietInfo, Date record, String timeOfMeal, Integer totalCalories) {
         DietRecordID = dietRecordID;
-        MemberID = memberID;
-        DietInfoID = dietInfoID;
+        this.member = member;
+        this.dietInfo = dietInfo;
         Record = record;
         TimeOfMeal = timeOfMeal;
         TotalCalories = totalCalories;
     }
 
     // getter setter
-    public int getDietRecordID() {
+    public Integer getDietRecordID() {
         return DietRecordID;
     }
-
-
-    public String getMemberID() {
-        return MemberID;
-    }
-
-
-    public int getDietInfoID() {
-        return DietInfoID;
-    }
-
 
     public Date getRecord() {
         return Record;
@@ -54,8 +51,39 @@ public class DietRecord {
     }
 
 
-    public int getTotalCalories() {
+    public Integer getTotalCalories() {
         return TotalCalories;
     }
 
+    public Member getMember() {
+        return member;
+    }
+
+    public DietInfo getDietInfo() {
+        return dietInfo;
+    }
+
+    public void setDietRecordID(Integer dietRecordID) {
+        DietRecordID = dietRecordID;
+    }
+
+    public void setRecord(Date record) {
+        Record = record;
+    }
+
+    public void setTimeOfMeal(String timeOfMeal) {
+        TimeOfMeal = timeOfMeal;
+    }
+
+    public void setTotalCalories(Integer totalCalories) {
+        TotalCalories = totalCalories;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setDietInfo(DietInfo dietInfo) {
+        this.dietInfo = dietInfo;
+    }
 }

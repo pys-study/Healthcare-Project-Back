@@ -1,23 +1,30 @@
 package com.hwpBackend.hwpSpring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class DietInfo {
+    public DietInfo() {
+    }
 
     @Id
-    @GeneratedValue
-    private int DietInfoID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer DietInfoID;
     private String DietName;
-    private int Calories;
-    private int Carbohydrate;
-    private int Protein;
-    private int Fats;
+    private Integer Calories;
+    private Integer Carbohydrate;
+    private Integer Protein;
+    private Integer Fats;
+
+    @OneToMany(mappedBy = "dietInfo")
+    @JsonIgnore
+    private List<DietRecord> dietRecordList;
 
     // constructor
-    public DietInfo(int dietInfoID, String dietName, int calories, int carbohydrate, int protein, int fats) {
+    public DietInfo(Integer dietInfoID, String dietName, Integer calories, Integer carbohydrate, Integer protein, Integer fats) {
         DietInfoID = dietInfoID;
         DietName = dietName;
         Calories = calories;
@@ -27,7 +34,7 @@ public class DietInfo {
     }
 
     // getter setter
-    public int getDietInfoID() {
+    public Integer getDietInfoID() {
         return DietInfoID;
     }
 
@@ -37,23 +44,54 @@ public class DietInfo {
     }
 
 
-    public int getCalories() {
+    public Integer getCalories() {
         return Calories;
     }
 
 
-    public int getCarbohydrate() {
+    public Integer getCarbohydrate() {
         return Carbohydrate;
     }
 
 
-    public int getProtein() {
+    public Integer getProtein() {
         return Protein;
     }
 
 
-    public int getFats() {
+    public Integer getFats() {
         return Fats;
     }
 
+    public List<DietRecord> getDietRecordList() {
+        return dietRecordList;
+    }
+
+    public void setDietInfoID(Integer dietInfoID) {
+        DietInfoID = dietInfoID;
+    }
+
+    public void setDietName(String dietName) {
+        DietName = dietName;
+    }
+
+    public void setCalories(Integer calories) {
+        Calories = calories;
+    }
+
+    public void setCarbohydrate(Integer carbohydrate) {
+        Carbohydrate = carbohydrate;
+    }
+
+    public void setProtein(Integer protein) {
+        Protein = protein;
+    }
+
+    public void setFats(Integer fats) {
+        Fats = fats;
+    }
+
+    public void setDietRecordList(List<DietRecord> dietRecordList) {
+        this.dietRecordList = dietRecordList;
+    }
 }

@@ -1,21 +1,28 @@
 package com.hwpBackend.hwpSpring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class ExerciseInfo {
+    public ExerciseInfo() {
+    }
 
     @Id
-    @GeneratedValue
-    private int ExerciseInfoID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer ExerciseInfoID;
     private String ExerciseType;
     private String ExerciseName;
-    private String CaloriesPerMinutes;
+    private Integer CaloriesPerMinutes;
+
+    @OneToMany(mappedBy = "exerciseInfo")
+    @JsonIgnore
+    private List<ExerciseRecord> exerciseRecordList;
 
     // constructor
-    public ExerciseInfo(int exerciseInfoID, String exerciseType, String exerciseName, String caloriesPerMinutes) {
+    public ExerciseInfo(Integer exerciseInfoID, String exerciseType, String exerciseName, Integer caloriesPerMinutes) {
         ExerciseInfoID = exerciseInfoID;
         ExerciseType = exerciseType;
         ExerciseName = exerciseName;
@@ -24,7 +31,7 @@ public class ExerciseInfo {
 
     // getter setter
 
-    public int getExerciseInfoID() {
+    public Integer getExerciseInfoID() {
         return ExerciseInfoID;
     }
 
@@ -39,8 +46,31 @@ public class ExerciseInfo {
     }
 
 
-    public String getCaloriesPerMinutes() {
+    public Integer getCaloriesPerMinutes() {
         return CaloriesPerMinutes;
     }
 
+    public List<ExerciseRecord> getExerciseRecordList() {
+        return exerciseRecordList;
+    }
+
+    public void setExerciseInfoID(Integer exerciseInfoID) {
+        ExerciseInfoID = exerciseInfoID;
+    }
+
+    public void setExerciseType(String exerciseType) {
+        ExerciseType = exerciseType;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        ExerciseName = exerciseName;
+    }
+
+    public void setCaloriesPerMinutes(Integer caloriesPerMinutes) {
+        CaloriesPerMinutes = caloriesPerMinutes;
+    }
+
+    public void setExerciseRecordList(List<ExerciseRecord> exerciseRecordList) {
+        this.exerciseRecordList = exerciseRecordList;
+    }
 }

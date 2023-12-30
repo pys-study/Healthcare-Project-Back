@@ -2,4 +2,4 @@ version: 0.0
 os: linux
 hooks:
   BeforeInstall:
-    - location: /scripts/codedeploy.sh
+    - location: hwpSpring/scripts/codedeploy.sh

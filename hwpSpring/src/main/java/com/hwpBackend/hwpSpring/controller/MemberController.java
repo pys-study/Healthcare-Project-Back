@@ -35,6 +35,11 @@ public class MemberController {
         return member;
     }
 
+    @GetMapping("/")
+    public String a() {
+        return "hello world";
+    }
+
     // POST /members
     @PostMapping("/members")
     public ResponseEntity<Member> createMember(@RequestBody Member member) {

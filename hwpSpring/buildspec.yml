@@ -12,7 +12,7 @@ phases:
   build:
     commands:
       - echo Building the Spring Project...
-      - cd springboot_test
+      - cd hwpSpring
       - ls
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
@@ -27,5 +27,5 @@ phases:
       - docker push 289850138235.dkr.ecr.ap-northeast-2.amazonaws.com/hwp:latest
 artifacts:
   files:
-    - springboot_test/appspec.yml
-    - springboot_test/scripts/**
+    - hwpSpring/appspec.yml
+    - hwpSpring/scripts/**

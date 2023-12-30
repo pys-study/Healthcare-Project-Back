@@ -27,7 +27,7 @@ public class BasicAuthenticationSecurityConfiguration {
                         auth ->
                                 auth
                                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() //프리플라이트 요청(OPTION 요청) 액세스 허용
-                                        .anyRequest().authenticated()
+                                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(

@@ -47,8 +47,8 @@ public class DietInfoController {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/members/{id}")
-    public void deleteMember(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
+    @DeleteMapping("/dietInformations/{id}")
+    public void deleteDietInfo(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
         repository.deleteById(id);
     }
 }

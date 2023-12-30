@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     @GetMapping("/")
-    public String a() {
+    public String mappingTest() {
         return "hello world";
     }
 

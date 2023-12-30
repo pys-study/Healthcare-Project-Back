@@ -16,7 +16,7 @@ import java.util.Optional;
 public class MemberController {
     private MemberRepository repository;
 
-    public MemberController( MemberRepository repository) {
+    public MemberController(MemberRepository repository) {
         this.repository = repository;
     }
 
@@ -46,12 +46,12 @@ public class MemberController {
 
         Member savedMember = repository.save(member);
 
-        URI localtion = ServletUriComponentsBuilder.fromCurrentRequest()
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedMember.getID())
                 .toUri();
 
-        return ResponseEntity.created(localtion).build();
+        return ResponseEntity.created(location).build();
 
     }
 

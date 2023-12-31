@@ -2,7 +2,9 @@ package com.hwpBackend.hwpSpring.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,14 +22,14 @@ public class DietRecord {
     @JsonIgnore
     @JoinColumn(name = "diet_info_id")
     private DietInfo dietInfo; // FK
-    private Date Record;
+    private LocalDate Record;
     private String TimeOfMeal;
     private Integer TotalCalories;
 
     // constructor
 
 
-    public DietRecord(Member member, DietInfo dietInfo, Date record, String timeOfMeal, Integer totalCalories) {
+    public DietRecord(Member member, DietInfo dietInfo, LocalDate record, String timeOfMeal, Integer totalCalories) {
         this.member = member;
         this.dietInfo = dietInfo;
         Record = record;
@@ -40,7 +42,7 @@ public class DietRecord {
         return DietRecordID;
     }
 
-    public Date getRecord() {
+    public LocalDate getRecord() {
         return Record;
     }
 
@@ -66,7 +68,7 @@ public class DietRecord {
         DietRecordID = dietRecordID;
     }
 
-    public void setRecord(Date record) {
+    public void setRecord(LocalDate record) {
         Record = record;
     }
 

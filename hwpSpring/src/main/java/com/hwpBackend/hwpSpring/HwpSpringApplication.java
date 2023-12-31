@@ -14,17 +14,5 @@ public class HwpSpringApplication {
         SpringApplication.run(HwpSpringApplication.class, args);
     }
 
-    // Allow all request only from 3000 to 8000
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("*")                    // GET, POST, PUT 등 모든 메서드 허용
-                        .allowedOrigins("*"); // ec2 web-server uri 추가할 것
-            }
-        };
-    }
 }

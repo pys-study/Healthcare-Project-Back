@@ -3,7 +3,6 @@ package com.hwpBackend.hwpSpring.controller;
 import com.hwpBackend.hwpSpring.entity.Member;
 import com.hwpBackend.hwpSpring.exception.UserNotFoundException;
 import com.hwpBackend.hwpSpring.repository.MemberRepository;
-import com.hwpBackend.hwpSpring.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

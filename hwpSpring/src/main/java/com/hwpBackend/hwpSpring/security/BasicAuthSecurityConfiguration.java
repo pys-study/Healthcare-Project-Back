@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -63,57 +65,43 @@ public class BasicAuthSecurityConfiguration {
         return http.build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {  // 메모리에 사용자 증명 저장
-//
-//        // 사용자 설정
-//        var user = User.withUsername("user1")
-//                .password("{noop}dummy") // 인코딩 하지 않을 것이기에 noop으로 설정
-//                .roles("USER")          // 역할 할당
-//                .build();
-//
-//        var admin = User.withUsername("admin")
-//                .password("{noop}dummy") // 인코딩 하지 않을 것이기에 noop으로 설정
-//                .roles("ADMIN")          // 역할 할당
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
 
     // 테스트용 H2 DB data source
-//    @Bean
-//    public DataSource dataSource(){
-//        return new EmbeddedDatabaseBuilder()
-//                .setType(EmbeddedDatabaseType.H2)
-//                .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
-//                .build();
-//    }
+    @Bean
+    public DataSource dataSource() {
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
+                .build();
+    }
 
     // RDS mariaDB data source
-    @Bean
-    public DataSource dataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
-        dataSource.setUrl("jdbc:mariadb://hwp-database-3.csaeggt9fqg5.ap-northeast-2.rds.amazonaws.com:3306/hwpDatabase");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("30rlrkq12!");
-
-        return dataSource;
-    }
+//    @Bean
+//    public DataSource dataSource(){
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mariadb://hwp-database-3.csaeggt9fqg5.ap-northeast-2.rds.amazonaws.com:3306/hwpDatabase");
+//        dataSource.setUsername("admin");
+//        dataSource.setPassword("30rlrkq12!");
+//
+//        return dataSource;
+//    }
 
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {  // db에 사용자 증명 저장
 
         // 사용자 설정
         var user = User.withUsername("user1")
-                .password("{noop}dummy") // 인코딩 하지 않을 것이기에 noop으로 설정
+                .password("dummy")
+                .passwordEncoder(str -> passwordEncoder().encode(str)) // 입력값을 가져와 passwordEncoder를 사용해 인코딩
                 .roles("USER")          // 역할 할당
                 .build();
 
 
         var admin = User.withUsername("admin")
-                .password("{noop}dummy") // 인코딩 하지 않을 것이기에 noop으로 설정
-                .roles("ADMIN")          // 역할 할당
+                .password("dummy")
+                .passwordEncoder(str -> passwordEncoder().encode(str)) // 입력값을 가져와 passwordEncoder를 사용해 인코딩
+                .roles("ADMIN", "USER")          // 역할 할당
                 .build();
 
         var jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
@@ -121,5 +109,10 @@ public class BasicAuthSecurityConfiguration {
         jdbcUserDetailsManager.createUser(admin);
 
         return jdbcUserDetailsManager;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() { // 해싱
+        return new BCryptPasswordEncoder();
     }
 }

@@ -22,13 +22,7 @@ public class Member {
     private Integer Age;
     private String Gender;
 
-    // FK
-    @OneToMany(mappedBy = "member")
-    @JsonIgnore // Member Bean에 운동 리스트, 식단 리스트를 json형태로 가져오려는 것은 아니기 때문에 어노테이션 적용
-    private List<ExerciseRecord> exerciseRecordList;
-    @OneToMany(mappedBy = "member")
-    @JsonIgnore
-    private List<DietRecord> dietRecordList;
+
 
     @Override
     public String toString() {
@@ -81,13 +75,6 @@ public class Member {
         return Gender;
     }
 
-    public List<ExerciseRecord> getExerciseRecordList() {
-        return exerciseRecordList;
-    }
-
-    public List<DietRecord> getDietRecordList() {
-        return dietRecordList;
-    }
 
     public void setID(String ID) {
         this.ID = ID;
@@ -113,11 +100,4 @@ public class Member {
         Gender = gender;
     }
 
-    public void setExerciseRecordList(List<ExerciseRecord> exerciseRecordList) {
-        this.exerciseRecordList = exerciseRecordList;
-    }
-
-    public void setDietRecordList(List<DietRecord> dietRecordList) {
-        this.dietRecordList = dietRecordList;
-    }
 }

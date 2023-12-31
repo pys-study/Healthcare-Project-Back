@@ -19,9 +19,6 @@ public class DietInfo {
     private Integer Protein;
     private Integer Fats;
 
-    @OneToMany(mappedBy = "dietInfo")
-    @JsonIgnore
-    private List<DietRecord> dietRecordList;
 
     // constructor
     public DietInfo(String dietName, Integer calories, Integer carbohydrate, Integer protein, Integer fats) {
@@ -62,9 +59,6 @@ public class DietInfo {
         return Fats;
     }
 
-    public List<DietRecord> getDietRecordList() {
-        return dietRecordList;
-    }
 
     public void setDietInfoID(Integer dietInfoID) {
         DietInfoID = dietInfoID;
@@ -88,9 +82,5 @@ public class DietInfo {
 
     public void setFats(Integer fats) {
         Fats = fats;
-    }
-
-    public void setDietRecordList(List<DietRecord> dietRecordList) {
-        this.dietRecordList = dietRecordList;
     }
 }

@@ -14,11 +14,9 @@ public class ExerciseRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer RecordID = 0; // PK
-    @ManyToOne(fetch = FetchType.LAZY) // 기본값인 FetchType.EAGER 사용 시 운동 세부 정보와 함께 사용자 세부 정보도 같이 가져온다
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER) // 기본값인 FetchType.EAGER 사용 시 운동 세부 정보와 함께 사용자 세부 정보도 같이 가져온다
     private Member member; // FK
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="exercise_info_id")
     private ExerciseInfo exerciseInfo; // FK
     private LocalDate RecordDate;

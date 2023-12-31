@@ -17,9 +17,6 @@ public class ExerciseInfo {
     private String ExerciseName;
     private Integer CaloriesPerMinutes;
 
-    @OneToMany(mappedBy = "exerciseInfo")
-    @JsonIgnore
-    private List<ExerciseRecord> exerciseRecordList;
 
     // constructor
     public ExerciseInfo(String exerciseType, String exerciseName, Integer caloriesPerMinutes) {
@@ -49,9 +46,6 @@ public class ExerciseInfo {
         return CaloriesPerMinutes;
     }
 
-    public List<ExerciseRecord> getExerciseRecordList() {
-        return exerciseRecordList;
-    }
 
     public void setExerciseInfoID(Integer exerciseInfoID) {
         ExerciseInfoID = exerciseInfoID;
@@ -69,7 +63,4 @@ public class ExerciseInfo {
         CaloriesPerMinutes = caloriesPerMinutes;
     }
 
-    public void setExerciseRecordList(List<ExerciseRecord> exerciseRecordList) {
-        this.exerciseRecordList = exerciseRecordList;
-    }
 }

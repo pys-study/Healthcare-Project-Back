@@ -1,8 +1,8 @@
 package com.hwpBackend.hwpSpring.controller;
 
-import com.hwpBackend.hwpSpring.entity.DietRecord;
+import com.hwpBackend.hwpSpring.entity.ExerciseRecord;
 import com.hwpBackend.hwpSpring.exception.InfoOrRecordNotFoundException;
-import com.hwpBackend.hwpSpring.repository.DietRecordRepository;
+import com.hwpBackend.hwpSpring.repository.ExerciseRecordRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,43 +12,43 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class DietRecordController {
-    private DietRecordRepository repository;
+public class ExerciseRecordController {
+    private ExerciseRecordRepository repository;
 
-    public DietRecordController(DietRecordRepository repository) {
+    public ExerciseRecordController(ExerciseRecordRepository repository) {
         this.repository = repository;
     }
 
     ;
 
 
-    @GetMapping("/dietRecords")
-    public List<DietRecord> retrieveAllDietRecord() {
+    @GetMapping("/exerciseRecords")
+    public List<ExerciseRecord> retrieveAllExerciseRecord() {
         return repository.findAll();
     }
 
-    @GetMapping("/dietRecords/{id}")
-    public Optional<DietRecord> retrieveDietRecord(@PathVariable(value = "id") Integer id) {
-        Optional<DietRecord> dietRecord = repository.findById(id);
+    @GetMapping("/exerciseRecords/{id}")
+    public Optional<ExerciseRecord> retrieveExerciseRecord(@PathVariable(value = "id") Integer id) {
+        Optional<ExerciseRecord> exerciseRecord = repository.findById(id);
 
-        if (dietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
-        return dietRecord;
+        if (exerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        return exerciseRecord;
     }
 
-    @PostMapping("/dietRecords")
-    public ResponseEntity<DietRecord> createDietRecord(@RequestBody DietRecord dietRecord) {
-        DietRecord savedDietRecord = repository.save(dietRecord);
+    @PostMapping("/exerciseRecords")
+    public ResponseEntity<ExerciseRecord> createExerciseRecord(@RequestBody ExerciseRecord exerciseRecord) {
+        ExerciseRecord savedExerciseRecord = repository.save(exerciseRecord);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedDietRecord.getDietRecordID())
+                .buildAndExpand(savedExerciseRecord.getRecordID())
                 .toUri();
 
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/dietRecords/{id}")
-    public void deleteDietRecord(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
+    @DeleteMapping("/exerciseRecords/{id}")
+    public void deleteExerciseRecord(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
         repository.deleteById(id);
     }
 }

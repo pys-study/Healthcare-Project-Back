@@ -22,12 +22,12 @@ public class DietInfoController {
 
     ;
 
-    @GetMapping("/dietInformations")
+    @GetMapping("/dietInfo")
     public List<DietInfo> retrieveAllDietInfo() {
         return repository.findAll();
     }
 
-    @GetMapping("/dietInformations/{id}")
+    @GetMapping("/dietInfo/{id}")
     public Optional<DietInfo> retrieveDietInfo(@PathVariable(value = "id") Integer id) {
         Optional<DietInfo> dietInfo = repository.findById(id);
 
@@ -35,7 +35,7 @@ public class DietInfoController {
         return dietInfo;
     }
 
-    @PostMapping("/dietInformations")
+    @PostMapping("/dietInfo")
     public ResponseEntity<DietInfo> createDietInfo(@RequestBody DietInfo dietInfo) {
         DietInfo savedDietInfo = repository.save(dietInfo);
 
@@ -47,7 +47,7 @@ public class DietInfoController {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/dietInformations/{id}")
+    @DeleteMapping("/dietInfo/{id}")
     public void deleteDietInfo(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
         repository.deleteById(id);
     }

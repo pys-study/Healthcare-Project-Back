@@ -15,11 +15,9 @@ public class DietRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer DietRecordID = 0; // PK
-    @ManyToOne(fetch = FetchType.LAZY) // 객체에만 사용 가능
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER) // 객체에만 사용 가능
     private Member member; // FK
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "diet_info_id")
     private DietInfo dietInfo; // FK
     private LocalDate Record;

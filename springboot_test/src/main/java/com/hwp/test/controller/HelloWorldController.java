@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloWorldController {
-    @GetMapping("/")
-    public String checkDefaultpage() { return "api is healthy";}
     @GetMapping("/hello-world")
     public String helloWorld() {
         return "Hello World v1";

@@ -10,6 +10,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.config.Customizer;
@@ -79,8 +80,8 @@ public class JwtSecurityConfiguration {
         http.headers(headers -> headers.frameOptions(
                 HeadersConfigurer.FrameOptionsConfig::sameOrigin)); // 요청이 동일한 오리진에서 오는 경우 해당 애플리케이션에 프레임 허용(h2 콘솔 사용하기 위함)
 
-//        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt); // oauth2 리소스 서버 사용
 
+//        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt); // oauth2 리소스 서버 사용 변경 전 코드
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())); // oauth2 리소스 서버 사용
 
 
@@ -96,6 +97,18 @@ public class JwtSecurityConfiguration {
                 .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
                 .build();
     }
+
+    // 로컬 mariaDB
+//    @Bean
+//    public DataSource dataSource(){
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mariadb://localhost:3300/hwpDatabase");
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("1234");
+//
+//        return dataSource;
+//    }
 
     // RDS mariaDB data source
 //    @Bean

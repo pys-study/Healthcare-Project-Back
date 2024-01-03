@@ -49,7 +49,10 @@ public class BasicAuthSecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> {
-            auth.anyRequest().authenticated(); // 모든 요청 접근 허용
+            auth
+                    .requestMatchers("/users").hasRole("USER")
+                    .requestMatchers("/admin/**").hasRole("ADMIN") // 매쳐 사용해서 인증 규칙 설정
+                    .anyRequest().authenticated(); // 모든 요청 접근 허용
         });
         http.sessionManagement( // 세선 해제
                 session -> session.sessionCreationPolicy(

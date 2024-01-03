@@ -4,6 +4,7 @@ import com.hwpBackend.hwpSpring.entity.DietInfo;
 import com.hwpBackend.hwpSpring.exception.InfoOrRecordNotFoundException;
 import com.hwpBackend.hwpSpring.repository.DietInfoRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +29,7 @@ public class DietInfoController {
     }
 
     @GetMapping("/dietInfo/{id}")
+//    @PreAuthorize("hasRole('USER') and #username == authentication.name")
     public Optional<DietInfo> retrieveDietInfo(@PathVariable(value = "id") Integer id) {
         Optional<DietInfo> dietInfo = repository.findById(id);
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class MemberJdbcCommandLineRunner implements CommandLineRunner {
@@ -28,8 +29,8 @@ public class MemberJdbcCommandLineRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // db test
-        Member member1 = new Member("aaa", "123", "aaa@aa.com", "고길동", 32, "남");
-        Member member2 = new Member("aab", "1234", "aab@aa.com", "고길순", 33, "여");
+        Member member1 = new Member("aaa", "123", "aaa@aa.com", "고길동", 32, "남", List.of("USER", "ADMIN"));
+        Member member2 = new Member("aab", "1234", "aab@aa.com", "고길순", 33, "여", List.of("USER"));
         memberRepository.save(member1);
         memberRepository.save(member2);
 

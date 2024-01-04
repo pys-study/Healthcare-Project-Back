@@ -42,7 +42,7 @@ import java.util.UUID;
 
 import static com.nimbusds.jose.jwk.RSAKey.*;
 
-@Configuration
+//@Configuration
 @EnableWebSecurity
 public class JwtSecurityConfiguration {
 
@@ -67,6 +67,7 @@ public class JwtSecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers("/members").hasRole("USER");
             auth.anyRequest().authenticated(); // 모든 요청 접근 허용
         });
         http.sessionManagement( // 세선 해제

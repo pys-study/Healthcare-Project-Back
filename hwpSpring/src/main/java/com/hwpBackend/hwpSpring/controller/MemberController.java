@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
-    private MemberRepository memberRepository;
-
 
     @PostMapping("/sign-in") // 모든 사용자에게 허옹
     public JwtToken signIn(@RequestBody SignInDto signInDto) {
@@ -44,8 +42,8 @@ public class MemberController {
         return SecurityUtil.getCurrentUsername();
     } // 현재 요청을 보낸 회원의 username을 간단하게 얻을 수 있다.
 
-//    @GetMapping("/")
-//    public Member showMembers{
+//    @GetMapping("/all")
+//    public Member showMembers(){
 //        return
 //    }
 

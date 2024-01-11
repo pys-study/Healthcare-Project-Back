@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -65,7 +66,18 @@ public class DietRecordController {
     }
 
     @DeleteMapping("{id}/delete")
-    public void deleteDietRecord(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
-        repository.deleteById(id);
+    public void deleteDietRecord(@PathVariable(value = "id") Integer id) {
+        String currentUser = SecurityUtil.getCurrentUsername();
+
+        DietRecord record = repository.findById(id).orElse(null);
+
+        if (record != null && currentUser.equals(Objects.requireNonNull(record).getMember().getUsername())) {
+            repository.deleteById(id);
+        } else if (record == null) {
+            throw new InfoOrRecordNotFoundException("해당하는 정보를 찾을 수 없습니다.");
+        } else {
+            // 본인의 정보가 아님
+            throw new AccessDeniedException("본인의 정보가 아닙니다.");
+        }
     }
 }

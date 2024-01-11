@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/dietInfo")
 public class DietInfoController {
 
     private DietInfoRepository repository;
@@ -22,13 +23,12 @@ public class DietInfoController {
     }
 
     ;
-
-    @GetMapping("/dietInfo")
+    @GetMapping("/")
     public List<DietInfo> retrieveAllDietInfo() {
         return repository.findAll();
     }
 
-    @GetMapping("/dietInfo/{id}")
+    @GetMapping("/{id}")
 //    @PreAuthorize("hasRole('USER') and #username == authentication.name")
     public Optional<DietInfo> retrieveDietInfo(@PathVariable(value = "id") Integer id) {
         Optional<DietInfo> dietInfo = repository.findById(id);
@@ -37,19 +37,21 @@ public class DietInfoController {
         return dietInfo;
     }
 
-    @PostMapping("/dietInfo")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/add")
     public ResponseEntity<DietInfo> createDietInfo(@RequestBody DietInfo dietInfo) {
         DietInfo savedDietInfo = repository.save(dietInfo);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedDietInfo.getDietInfoID())
+                .buildAndExpand(savedDietInfo.getDietInfoId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/dietInfo/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}/delete")
     public void deleteDietInfo(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
         repository.deleteById(id);
     }

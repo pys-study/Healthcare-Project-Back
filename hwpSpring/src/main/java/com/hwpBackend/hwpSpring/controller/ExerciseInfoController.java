@@ -4,6 +4,7 @@ import com.hwpBackend.hwpSpring.entity.ExerciseInfo;
 import com.hwpBackend.hwpSpring.exception.InfoOrRecordNotFoundException;
 import com.hwpBackend.hwpSpring.repository.ExerciseInfoRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/exerciseInfo")
 public class ExerciseInfoController {
 
     private ExerciseInfoRepository repository;
@@ -22,21 +24,15 @@ public class ExerciseInfoController {
 
     ;
 
-    @GetMapping("/exerciseInfo")
+    @GetMapping("/")
     public List<ExerciseInfo> retrieveAllExerciseInfo() {
         return repository.findAll();
     }
 
-    @GetMapping("/exerciseInfo/{id}")
-    public Optional<ExerciseInfo> retrieveExerciseInfo(@PathVariable(value = "id") Integer id) {
-        Optional<ExerciseInfo> exerciseInfo = repository.findById(id);
-
-        if (exerciseInfo.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
-        return exerciseInfo;
-    }
-
-    @PostMapping("/exerciseInfo")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/add")
     public ResponseEntity<ExerciseInfo> createExerciseInfo(@RequestBody ExerciseInfo exerciseInfo) {
+
         ExerciseInfo savedExerciseInfo = repository.save(exerciseInfo);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -47,7 +43,16 @@ public class ExerciseInfoController {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/exerciseInfo/{id}")
+    @GetMapping("/{id}")
+    public Optional<ExerciseInfo> retrieveExerciseInfo(@PathVariable(value = "id") Integer id) {
+        Optional<ExerciseInfo> exerciseInfo = repository.findById(id);
+
+        if (exerciseInfo.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        return exerciseInfo;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}/delete")
     public void deleteExerciseInfo(@PathVariable(value = "id") Integer id) { // String인 경우 반드시 value값을 지정해줄 것
         repository.deleteById(id);
     }

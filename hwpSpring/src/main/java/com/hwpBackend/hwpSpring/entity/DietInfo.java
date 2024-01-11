@@ -1,86 +1,25 @@
 package com.hwpBackend.hwpSpring.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.List;
 
+@Builder
 @Entity
+@ToString
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DietInfo {
-    public DietInfo() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer DietInfoID = 0;
-    private String DietName;
-    private Integer Calories;
-    private Integer Carbohydrate;
-    private Integer Protein;
-    private Integer Fats;
+    @Column(updatable = false, unique = true, nullable = false)
+    private Integer dietInfoId;
+    private String dietName;
+    private Integer calories;
+    private Integer carbohydrate;
+    private Integer protein;
+    private Integer fats;
 
-
-    // constructor
-    public DietInfo(String dietName, Integer calories, Integer carbohydrate, Integer protein, Integer fats) {
-        DietName = dietName;
-        Calories = calories;
-        Carbohydrate = carbohydrate;
-        Protein = protein;
-        Fats = fats;
-    }
-
-    // getter setter
-    public Integer getDietInfoID() {
-        return DietInfoID;
-    }
-
-
-    public String getDietName() {
-        return DietName;
-    }
-
-
-    public Integer getCalories() {
-        return Calories;
-    }
-
-
-    public Integer getCarbohydrate() {
-        return Carbohydrate;
-    }
-
-
-    public Integer getProtein() {
-        return Protein;
-    }
-
-
-    public Integer getFats() {
-        return Fats;
-    }
-
-
-    public void setDietInfoID(Integer dietInfoID) {
-        DietInfoID = dietInfoID;
-    }
-
-    public void setDietName(String dietName) {
-        DietName = dietName;
-    }
-
-    public void setCalories(Integer calories) {
-        Calories = calories;
-    }
-
-    public void setCarbohydrate(Integer carbohydrate) {
-        Carbohydrate = carbohydrate;
-    }
-
-    public void setProtein(Integer protein) {
-        Protein = protein;
-    }
-
-    public void setFats(Integer fats) {
-        Fats = fats;
-    }
 }

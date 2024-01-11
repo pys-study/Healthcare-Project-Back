@@ -8,6 +8,7 @@ import com.hwpBackend.hwpSpring.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,14 +28,9 @@ public class ExerciseRecordController {
 
     ;
 
-
-//    @GetMapping("/exerciseRecords")
-//    public List<ExerciseRecord> retrieveAllExerciseRecord() {
-//        return repository.findAll();
-//    }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
-    public List<ExerciseRecord> retrieveAllExerciseRecord(){
+    public List<ExerciseRecord> retrieveAllExerciseRecord() {
         return repository.findAll();
     }
 
@@ -42,7 +38,7 @@ public class ExerciseRecordController {
     public ResponseEntity<?> retrieveExerciseRecord(@PathVariable(value = "id") String id) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if(!currentUser.equals(id)) {
+        if (!currentUser.equals(id)) {
             throw new AccessDeniedException("본인의 정보가 아닙니다.");
         }
         List<ExerciseRecord> savedExerciseRecord = repository.findByMember_Username(id);
@@ -54,6 +50,12 @@ public class ExerciseRecordController {
 
     @PostMapping("/add")
     public ResponseEntity<ExerciseRecord> createExerciseRecord(@RequestBody ExerciseRecord exerciseRecord) {
+        String currentUser = SecurityUtil.getCurrentUsername();
+
+        if (!currentUser.equals(exerciseRecord.getMember().getName())) {
+            throw new AccessDeniedException("본인의 정보만 추가할 수 있습니다.");
+        }
+
         ExerciseRecord savedExerciseRecord = repository.save(exerciseRecord);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -71,13 +73,11 @@ public class ExerciseRecordController {
         // findById 메서드의 결과가 null이면 해당 id에 해당하는 정보가 없다는 뜻
         ExerciseRecord record = repository.findById(id).orElse(null);
 
-        if(record != null && currentUser.equals(Objects.requireNonNull(record).getMember().getUsername())){
+        if (record != null && currentUser.equals(Objects.requireNonNull(record).getMember().getUsername())) {
             repository.deleteById(id);
-        }
-        else if (record == null){
+        } else if (record == null) {
             throw new InfoOrRecordNotFoundException("해당하는 정보를 찾을 수 없습니다.");
-        }
-        else{
+        } else {
             // 본인의 정보가 아님
             throw new AccessDeniedException("본인의 정보가 아닙니다.");
         }

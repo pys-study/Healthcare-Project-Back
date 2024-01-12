@@ -1,7 +1,6 @@
 package com.hwpBackend.hwpSpring.controller;
 
 import com.hwpBackend.hwpSpring.entity.DietRecord;
-import com.hwpBackend.hwpSpring.entity.ExerciseRecord;
 import com.hwpBackend.hwpSpring.exception.InfoOrRecordNotFoundException;
 import com.hwpBackend.hwpSpring.repository.DietRecordRepository;
 import com.hwpBackend.hwpSpring.util.SecurityUtil;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/dietRecords")
@@ -35,13 +34,27 @@ public class DietRecordController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> retrieveDietRecord(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> retrieveDietRecordById(@PathVariable(value = "id") String id) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
         if(!currentUser.equals(id)){
             throw new AccessDeniedException("본인의 정보가 아닙니다.");
         }
-        List<ExerciseRecord> savedDietRecord = repository.findByMember_Username(id);
+        List<DietRecord> savedDietRecord = repository.findByMember_Username(id);
+
+        if (savedDietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        return new ResponseEntity<>(savedDietRecord, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/{record}")
+    public ResponseEntity<?> retrieveDietRecord(@PathVariable(value = "id") String id,
+                                                @PathVariable(value = "record") LocalDate record) {
+        String currentUser = SecurityUtil.getCurrentUsername();
+
+        if(!currentUser.equals(id)){
+            throw new AccessDeniedException("본인의 정보가 아닙니다.");
+        }
+        List<DietRecord> savedDietRecord = repository.findByMember_UsernameAndRecord(id, record);
 
         if (savedDietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
         return new ResponseEntity<>(savedDietRecord, HttpStatus.OK);

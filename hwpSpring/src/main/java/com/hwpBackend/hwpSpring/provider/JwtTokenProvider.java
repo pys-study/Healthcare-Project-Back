@@ -1,6 +1,7 @@
 package com.hwpBackend.hwpSpring.provider;
 
 import com.hwpBackend.hwpSpring.dto.JwtToken;
+import com.hwpBackend.hwpSpring.repository.TokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     private final Key key;
 
+    private TokenRepository tokenRepository;
+
     // application.yml에서 secret 값 가져와서 key에 저장
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -41,7 +44,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         // Access Token 생성
-        Date accessTokenExpiresln = new Date(now + 86400000);
+        Date accessTokenExpiresln = new Date(now + 3600000); // 1시간
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -51,7 +54,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
+                .setExpiration(new Date(now + 86400000 * 14)) // 2주
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -114,6 +117,11 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+
+    // RefreshToken 존재유무 확인
+    public boolean existsRefreshToken(String refreshToken) {
+        return tokenRepository.existsByRefreshToken(refreshToken);
     }
 
 }

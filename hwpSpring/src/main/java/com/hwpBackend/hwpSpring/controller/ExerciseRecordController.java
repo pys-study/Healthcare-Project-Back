@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,13 +36,27 @@ public class ExerciseRecordController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> retrieveExerciseRecord(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> retrieveExerciseRecordById(@PathVariable(value = "id") String id) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
         if (!currentUser.equals(id)) {
             throw new AccessDeniedException("본인의 정보가 아닙니다.");
         }
         List<ExerciseRecord> savedExerciseRecord = repository.findByMember_Username(id);
+
+        if (savedExerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        return new ResponseEntity<>(savedExerciseRecord, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/{record}")
+    public ResponseEntity<?> retrieveExerciseRecord(@PathVariable(value = "id") String id,
+                                                    @PathVariable(value = "record") LocalDate record) {
+        String currentUser = SecurityUtil.getCurrentUsername();
+
+        if (!currentUser.equals(id)) {
+            throw new AccessDeniedException("본인의 정보가 아닙니다.");
+        }
+        List<ExerciseRecord> savedExerciseRecord = repository.findByMember_UsernameAndRecordDate(id, record);
 
         if (savedExerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
         return new ResponseEntity<>(savedExerciseRecord, HttpStatus.OK);

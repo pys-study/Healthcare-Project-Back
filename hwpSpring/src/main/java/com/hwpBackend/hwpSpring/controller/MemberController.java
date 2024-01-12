@@ -13,12 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
+    private final MemberRepository repository;
 
     @PostMapping("/sign-in") // 모든 사용자에게 허옹
     public JwtToken signIn(@RequestBody SignInDto signInDto) {
@@ -38,9 +41,14 @@ public class MemberController {
     }
 
     @PostMapping("/test") // USER 권한을 가진 사용자에게 허용
-    public String test(){
+    public String test() {
         return SecurityUtil.getCurrentUsername();
     } // 현재 요청을 보낸 회원의 username을 간단하게 얻을 수 있다.
+
+    @GetMapping("/getUser")
+    public Optional<Member> getUser() {
+        return repository.findByUsername(SecurityUtil.getCurrentUsername());
+    }
 
 //    @GetMapping("/all")
 //    public Member showMembers(){

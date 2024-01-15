@@ -71,6 +71,7 @@ public class ExerciseRecordController {
             throw new AccessDeniedException("본인의 정보만 추가할 수 있습니다.");
         }
 
+        exerciseRecord.calcTotalCalories();
         ExerciseRecord savedExerciseRecord = repository.save(exerciseRecord);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

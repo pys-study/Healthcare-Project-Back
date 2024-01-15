@@ -43,4 +43,8 @@ public class ExerciseRecord {
         this.sets = sets;
         totalCalories = exerciseInfo.getCaloriesPerMinutes() * sets;
     }
+
+    public void calcTotalCalories(){
+        totalCalories = exerciseInfo.getCaloriesPerMinutes() * countPerSets * sets;
+    }
 }

@@ -46,7 +46,7 @@ public class MemberController {
     } // 현재 요청을 보낸 회원의 username을 간단하게 얻을 수 있다.
 
     @GetMapping("/getUser")
-    public Optional<Member> getUser() {
+    public Member getUser() {
         return repository.findByUsername(SecurityUtil.getCurrentUsername());
     }
 

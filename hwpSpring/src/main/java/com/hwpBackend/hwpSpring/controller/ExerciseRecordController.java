@@ -1,9 +1,11 @@
 package com.hwpBackend.hwpSpring.controller;
 
+import com.hwpBackend.hwpSpring.dto.ExerciseRecordDto;
 import com.hwpBackend.hwpSpring.entity.ExerciseRecord;
 import com.hwpBackend.hwpSpring.entity.Member;
 import com.hwpBackend.hwpSpring.exception.InfoOrRecordNotFoundException;
 import com.hwpBackend.hwpSpring.repository.ExerciseRecordRepository;
+import com.hwpBackend.hwpSpring.repository.MemberRepository;
 import com.hwpBackend.hwpSpring.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,11 @@ import java.util.Optional;
 @RequestMapping("/exerciseRecords")
 public class ExerciseRecordController {
     private final ExerciseRecordRepository repository;
+    private final MemberRepository memberRepository;
 
-    public ExerciseRecordController(ExerciseRecordRepository repository) {
+    public ExerciseRecordController(ExerciseRecordRepository repository, MemberRepository memberRepository) {
         this.repository = repository;
+        this.memberRepository = memberRepository;
     }
 
     ;
@@ -64,13 +68,14 @@ public class ExerciseRecordController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<ExerciseRecord> createExerciseRecord(@RequestBody ExerciseRecord exerciseRecord) {
+    public ResponseEntity<ExerciseRecord> createExerciseRecord(@RequestBody ExerciseRecordDto exerciseRecordDto) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if (!currentUser.equals(exerciseRecord.getMember().getName())) {
+        if (!currentUser.equals(exerciseRecordDto.getUsername())) {
             throw new AccessDeniedException("본인의 정보만 추가할 수 있습니다.");
         }
 
+        ExerciseRecord exerciseRecord = exerciseRecordDto.toEntity(memberRepository.findByUsername(currentUser));
         exerciseRecord.calcTotalCalories();
         ExerciseRecord savedExerciseRecord = repository.save(exerciseRecord);
 

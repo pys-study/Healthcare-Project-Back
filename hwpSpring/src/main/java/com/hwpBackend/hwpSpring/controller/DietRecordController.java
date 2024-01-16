@@ -1,8 +1,10 @@
 package com.hwpBackend.hwpSpring.controller;
 
+import com.hwpBackend.hwpSpring.dto.DietRecordDto;
 import com.hwpBackend.hwpSpring.entity.DietRecord;
 import com.hwpBackend.hwpSpring.exception.InfoOrRecordNotFoundException;
 import com.hwpBackend.hwpSpring.repository.DietRecordRepository;
+import com.hwpBackend.hwpSpring.repository.MemberRepository;
 import com.hwpBackend.hwpSpring.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,12 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/dietRecords")
 public class DietRecordController {
-    private DietRecordRepository repository;
+    private final DietRecordRepository repository;
+    private final MemberRepository memberRepository;
 
-    public DietRecordController(DietRecordRepository repository) {
+    public DietRecordController(DietRecordRepository repository, MemberRepository memberRepository) {
         this.repository = repository;
+        this.memberRepository = memberRepository;
     }
 
     ;
@@ -61,13 +65,14 @@ public class DietRecordController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DietRecord> createDietRecord(@RequestBody DietRecord dietRecord) {
+    public ResponseEntity<DietRecord> createDietRecord(@RequestBody DietRecordDto dietRecordDto) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if (!currentUser.equals(dietRecord.getMember().getName())) {
+        if (!currentUser.equals(dietRecordDto.getUsername())) {
             throw new AccessDeniedException("본인의 정보만 추가할 수 있습니다.");
         }
 
+        DietRecord dietRecord = dietRecordDto.toEntity(memberRepository.findByUsername(currentUser));
         DietRecord savedDietRecord = repository.save(dietRecord);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

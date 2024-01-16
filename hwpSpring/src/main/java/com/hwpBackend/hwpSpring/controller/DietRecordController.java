@@ -32,35 +32,28 @@ public class DietRecordController {
     ;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<DietRecord> retrieveAllDietRecord() {
         return repository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> retrieveDietRecordById(@PathVariable(value = "id") String id) {
+    @GetMapping("/")
+    public ResponseEntity<?> retrieveDietRecordById() {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if(!currentUser.equals(id)){
-            throw new AccessDeniedException("본인의 정보가 아닙니다.");
-        }
-        List<DietRecord> savedDietRecord = repository.findByMember_Username(id);
+        List<DietRecord> savedDietRecord = repository.findByMember_Username(currentUser);
 
-        if (savedDietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        if (savedDietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + currentUser);
         return new ResponseEntity<>(savedDietRecord, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/{record}")
-    public ResponseEntity<?> retrieveDietRecord(@PathVariable(value = "id") String id,
-                                                @PathVariable(value = "record") LocalDate record) {
+    @GetMapping("/{record}")
+    public ResponseEntity<?> retrieveDietRecord(@PathVariable(value = "record") LocalDate record) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if(!currentUser.equals(id)){
-            throw new AccessDeniedException("본인의 정보가 아닙니다.");
-        }
-        List<DietRecord> savedDietRecord = repository.findByMember_UsernameAndRecord(id, record);
+        List<DietRecord> savedDietRecord = repository.findByMember_UsernameAndRecord(currentUser, record);
 
-        if (savedDietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        if (savedDietRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + currentUser);
         return new ResponseEntity<>(savedDietRecord, HttpStatus.OK);
     }
 

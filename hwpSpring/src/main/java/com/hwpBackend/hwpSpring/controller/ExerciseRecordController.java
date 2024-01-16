@@ -34,35 +34,28 @@ public class ExerciseRecordController {
     ;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<ExerciseRecord> retrieveAllExerciseRecord() {
         return repository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> retrieveExerciseRecordById(@PathVariable(value = "id") String id) {
+    @GetMapping("/")
+    public ResponseEntity<?> retrieveExerciseRecordById() {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if (!currentUser.equals(id)) {
-            throw new AccessDeniedException("본인의 정보가 아닙니다.");
-        }
-        List<ExerciseRecord> savedExerciseRecord = repository.findByMember_Username(id);
+        List<ExerciseRecord> savedExerciseRecord = repository.findByMember_Username(currentUser);
 
-        if (savedExerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        if (savedExerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + currentUser);
         return new ResponseEntity<>(savedExerciseRecord, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/{record}")
-    public ResponseEntity<?> retrieveExerciseRecord(@PathVariable(value = "id") String id,
-                                                    @PathVariable(value = "record") LocalDate record) {
+    @GetMapping("/{record}")
+    public ResponseEntity<?> retrieveExerciseRecord(@PathVariable(value = "record") LocalDate record) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if (!currentUser.equals(id)) {
-            throw new AccessDeniedException("본인의 정보가 아닙니다.");
-        }
-        List<ExerciseRecord> savedExerciseRecord = repository.findByMember_UsernameAndRecordDate(id, record);
+        List<ExerciseRecord> savedExerciseRecord = repository.findByMember_UsernameAndRecordDate(currentUser, record);
 
-        if (savedExerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + id.toString());
+        if (savedExerciseRecord.isEmpty()) throw new InfoOrRecordNotFoundException("id:" + currentUser);
         return new ResponseEntity<>(savedExerciseRecord, HttpStatus.OK);
     }
 

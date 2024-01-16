@@ -68,9 +68,6 @@ public class DietRecordController {
     public ResponseEntity<DietRecord> createDietRecord(@RequestBody DietRecordDto dietRecordDto) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if (!currentUser.equals(dietRecordDto.getUsername())) {
-            throw new AccessDeniedException("본인의 정보만 추가할 수 있습니다.");
-        }
 
         DietRecord dietRecord = dietRecordDto.toEntity(memberRepository.findByUsername(currentUser));
         DietRecord savedDietRecord = repository.save(dietRecord);

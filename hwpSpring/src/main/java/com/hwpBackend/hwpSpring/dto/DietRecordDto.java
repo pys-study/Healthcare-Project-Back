@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @ToString
 public class DietRecordDto {
 
-    private String username;
     private DietInfo dietInfo;
     private LocalDate record;
     private String timeOfMeal;

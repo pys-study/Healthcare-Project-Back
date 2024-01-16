@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExerciseRecordDto {
-    private String username;
     private ExerciseInfo exerciseInfo;
     private LocalDate recordDate;
     private Integer durationMinutes;

@@ -71,10 +71,6 @@ public class ExerciseRecordController {
     public ResponseEntity<ExerciseRecord> createExerciseRecord(@RequestBody ExerciseRecordDto exerciseRecordDto) {
         String currentUser = SecurityUtil.getCurrentUsername();
 
-        if (!currentUser.equals(exerciseRecordDto.getUsername())) {
-            throw new AccessDeniedException("본인의 정보만 추가할 수 있습니다.");
-        }
-
         ExerciseRecord exerciseRecord = exerciseRecordDto.toEntity(memberRepository.findByUsername(currentUser));
         exerciseRecord.calcTotalCalories();
         ExerciseRecord savedExerciseRecord = repository.save(exerciseRecord);

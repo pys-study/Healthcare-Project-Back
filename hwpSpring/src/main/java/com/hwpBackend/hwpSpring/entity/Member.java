@@ -1,123 +1,65 @@
 package com.hwpBackend.hwpSpring.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Builder
 @Entity
-public class Member {
-    public Member() {
-    }
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+public class Member implements UserDetails {
+
     @Id
     @Size(min=2, message = "ID는 2글자 이상이어야 합니다.")
-    private String ID;
-    private String Password;
-    private String Email;
-    private String Name;
-    private Integer Age;
-    private String Gender;
+    @Column(name = "ID", unique = true, nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
+    private String email;
+    private String name;
+    private Integer age;
+    private String gender;
 
-    // FK
-    @OneToMany(mappedBy = "member")
-    @JsonIgnore // Member Bean에 운동 리스트, 식단 리스트를 json형태로 가져오려는 것은 아니기 때문에 어노테이션 적용
-    private List<ExerciseRecord> exerciseRecordList;
-    @OneToMany(mappedBy = "member")
-    @JsonIgnore
-    private List<DietRecord> dietRecordList;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
 
     @Override
-    public String toString() {
-        return "Member{" +
-                "ID='" + ID + '\'' +
-                ", Password='" + Password + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Name='" + Name + '\'' +
-                ", Age=" + Age +
-                ", Gender='" + Gender + '\'' +
-                '}';
+    // 멤버가 가지고 있는 권한(authority) 목록을 SimpleGrantedAuthority로 변환하여 반환
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
-    public Member(String ID, String password, String email, String name, Integer age, String gender) {
-        this.ID = ID;
-        Password = password;
-        Email = email;
-        Name = name;
-        Age = age;
-        Gender = gender;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    // getter setter
-    public String getID() {
-        return ID;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-
-    public String getPassword() {
-        return Password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-
-    public String getEmail() {
-        return Email;
-    }
-
-
-    public String getName() {
-        return Name;
-    }
-
-
-    public Integer getAge() {
-        return Age;
-    }
-
-
-    public String getGender() {
-        return Gender;
-    }
-
-    public List<ExerciseRecord> getExerciseRecordList() {
-        return exerciseRecordList;
-    }
-
-    public List<DietRecord> getDietRecordList() {
-        return dietRecordList;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public void setAge(Integer age) {
-        Age = age;
-    }
-
-    public void setGender(String gender) {
-        Gender = gender;
-    }
-
-    public void setExerciseRecordList(List<ExerciseRecord> exerciseRecordList) {
-        this.exerciseRecordList = exerciseRecordList;
-    }
-
-    public void setDietRecordList(List<DietRecord> dietRecordList) {
-        this.dietRecordList = dietRecordList;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

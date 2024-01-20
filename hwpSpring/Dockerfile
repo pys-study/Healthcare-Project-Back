@@ -30,5 +30,7 @@ RUN echo "        dialect: org.hibernate.dialect.MariaDBDialect" >> ./applicatio
 RUN echo "    hibernate:" >> ./application.yml
 RUN echo "      ddl-auto: update" >> ./application.yml
 
+cat ./application.yml
+
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "app.jar"]

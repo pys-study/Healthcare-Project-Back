@@ -42,7 +42,7 @@ phases:
       - echo Building the Spring Project...
       - cd hwpSpring
       - ls
-      - cat ./hwpSpring/application.yml
+      - cat ./application.yml
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo Build started on `date`

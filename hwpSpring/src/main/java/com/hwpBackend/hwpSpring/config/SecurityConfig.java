@@ -32,6 +32,20 @@ public class SecurityConfig {
                 // REST API 이므로 basic auth 및 csrf 보안을 사용하지 않음
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(
+                        corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+                            @Override
+                            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                                CorsConfiguration config = new CorsConfiguration();
+                                config.setAllowedOrigins(Collections.singletonList("https://care.healthcare-hwp.com/"));
+                                config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                                config.setAllowedMethods(Collections.singletonList("*"));
+                                config.setAllowCredentials(true);
+                                return config;
+                            }
+                        }
+                        )
+                )
                 //JWT를 사용하기 때문에 세션을 사용하지 않음
                 .sessionManagement( // 세선 해제
                         session -> session.sessionCreationPolicy(

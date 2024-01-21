@@ -37,6 +37,7 @@ phases:
     commands:
       - echo Building the Spring Project...
       - cd hwpSpring
+      - ls
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo Build started on `date`

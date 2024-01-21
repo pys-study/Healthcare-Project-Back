@@ -35,6 +35,11 @@ phases:
         echo "        dialect: org.hibernate.dialect.MariaDBDialect" >>./application.yml
         echo "    hibernate:" >>./application.yml
         echo "      ddl-auto: update" >>./application.yml
+        echo "management:" >>./application.yml
+        echo "  endpoints:" >>./application.yml
+        echo "    web:" >>./application.yml
+        echo "      exposure:" >>./application.yml
+        echo "        include: health" >>./application.yml
   build:
     commands:
       - echo Building the Spring Project...

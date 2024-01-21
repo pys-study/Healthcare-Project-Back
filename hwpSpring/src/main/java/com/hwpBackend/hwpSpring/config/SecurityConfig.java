@@ -38,7 +38,7 @@ public class SecurityConfig {
                             @Override
                             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                                 CorsConfiguration config = new CorsConfiguration();
-                                config.setAllowedOrigins(Collections.singletonList("https://care.healthcare-hwp.com/"));
+                                config.setAllowedOrigins(Collections.singletonList("*"));
                                 config.setAllowedOrigins(Collections.singletonList("*"));
                                 config.setAllowedMethods(Collections.singletonList("*"));
                                 config.setAllowCredentials(true);

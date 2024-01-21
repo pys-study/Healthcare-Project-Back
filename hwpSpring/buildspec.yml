@@ -9,11 +9,29 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo "jwt:" > ./hwpSpring/application.yml
+      - echo "  secret: ${JWT_SECRET}" >> ./hwpSpring/application.yml
+      - echo "spring:" >> ./hwpSpring/application.yml
+      - echo "  profiles:" >> ./hwpSpring/application.yml
+      - echo "    include: aws" >> ./hwpSpring/application.yml
+      - echo "    active: dev" >> ./hwpSpring/application.yml
+      - echo "  datasource:" >> ./hwpSpring/application.yml
+      - echo "    url: ${DATABASE_URL}" >> ./hwpSpring/application.yml
+      - echo "    username: ${DATABASE_USERNAME}" >> ./hwpSpring/application.yml
+      - echo "    password: ${DATABASE_PASSWORD}" >> ./hwpSpring/application.yml
+      - echo "    driver-class-name: org.mariadb.jdbc.Driver" >> ./hwpSpring/application.yml
+      - echo "  jpa:" >> ./hwpSpring/application.yml
+      - echo "    properties:" >> ./hwpSpring/application.yml
+      - echo "      hibernate:" >> ./hwpSpring/application.yml
+      - echo "        show_sql: true" >> ./hwpSpring/application.yml
+      - echo "        format_sql: true" >> ./hwpSpring/application.yml
+      - echo "        dialect: org.hibernate.dialect.MariaDBDialect" >> ./hwpSpring/application.yml
+      - echo "    hibernate:" >> ./hwpSpring/application.yml
+      - echo "      ddl-auto: update" >> ./hwpSpring/application.yml
   build:
     commands:
       - echo Building the Spring Project...
       - cd hwpSpring
-      - ls
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo Build started on `date`

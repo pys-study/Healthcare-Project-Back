@@ -14,26 +14,27 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - mkdir -p ./hwpSpring/src/main/resources/
+      - cd ./hwpSpring/src/main/resources
       - |
-        echo "jwt:" > ./hwpSpring/src/main/resources/application.yml
-        echo "  secret: $JWT_SECRET" >> src/main/resources/application.yml
-        echo "spring:" >> src/main/resources/application.yml
-        echo "  profiles:" >> src/main/resources/application.yml
-        echo "    include: aws" >> src/main/resources/application.yml
-        echo "    active: dev" >> src/main/resources/application.yml
-        echo "  datasource:" >> src/main/resources/application.yml
-        echo "    url: $DATABASE_URL" >> src/main/resources/application.yml
-        echo "    username: $DATABASE_USERNAME" >> src/main/resources/application.yml
-        echo "    password: $DATABASE_PASSWORD" >> src/main/resources/application.yml
-        echo "    driver-class-name: org.mariadb.jdbc.Driver" >> src/main/resources/application.yml
-        echo "  jpa:" >> src/main/resources/application.yml
-        echo "    properties:" >> src/main/resources/application.yml
-        echo "      hibernate:" >> src/main/resources/application.yml
-        echo "        show_sql: true" >> src/main/resources/application.yml
-        echo "        format_sql: true" >> src/main/resources/application.yml
-        echo "        dialect: org.hibernate.dialect.MariaDBDialect" >> src/main/resources/application.yml
-        echo "    hibernate:" >> src/main/resources/application.yml
-        echo "      ddl-auto: update" >> src/main/resources/application.yml
+        echo "jwt:" > ./application.yml
+        echo "  secret: $JWT_SECRET" >>/application.yml
+        echo "spring:" >>/application.yml
+        echo "  profiles:" >>/application.yml
+        echo "    include: aws" >>/application.yml
+        echo "    active: dev" >>/application.yml
+        echo "  datasource:" >>/application.yml
+        echo "    url: $DATABASE_URL" >>/application.yml
+        echo "    username: $DATABASE_USERNAME" >>/application.yml
+        echo "    password: $DATABASE_PASSWORD" >>/application.yml
+        echo "    driver-class-name: org.mariadb.jdbc.Driver" >>/application.yml
+        echo "  jpa:" >>/application.yml
+        echo "    properties:" >>/application.yml
+        echo "      hibernate:" >>/application.yml
+        echo "        show_sql: true" >>/application.yml
+        echo "        format_sql: true" >>/application.yml
+        echo "        dialect: org.hibernate.dialect.MariaDBDialect" >>/application.yml
+        echo "    hibernate:" >>/application.yml
+        echo "      ddl-auto: update" >>/application.yml
     commands:
       - echo Building the Spring Project...
       - cd hwpSpring

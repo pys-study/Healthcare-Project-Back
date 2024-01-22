@@ -21,10 +21,7 @@ public class HwpSpringApplication {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("*")                    // GET, POST, PUT 등 모든 메서드 허용
-//                        .allowedOriginPatterns("*") // ec2 web-server uri 추가할 것 // front domain 추가
-
-                        .allowedOrigins("http://localhost:3000")
-//                        .allowedOrigins("https://care.healthcare-hwp.com")
+                        .allowedOrigins("http://localhost:3000", "https://care.healthcare-hwp.com")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }

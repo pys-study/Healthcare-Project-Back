@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class DietRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, unique = true, nullable = false)
     @Builder.Default
     private Integer dietRecordId = 0; // PK

@@ -4,16 +4,47 @@ env:
   variables:
     AWS_DEFAULT_REGION: ap-northeast-2
     AWS_ACCOUNT_ID: 289850138235
+    JWT_SECRET: $JWT_SECRET
+    DATABASE_URL: $DATABASE_URL
+    DATABASE_USERNAME: $DATABASE_USERNAME
+    DATABASE_PASSWORD: $DATABASE_PASSWORD
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - mkdir -p ./hwpSpring/src/main/resources/
+      - cd ./hwpSpring/src/main/resources
+      - |
+        echo "jwt:" > ./application.yml
+        echo "  secret: $JWT_SECRET" >>./application.yml
+        echo "spring:" >>./application.yml
+        echo "  profiles:" >>./application.yml
+        echo "    include: aws" >>./application.yml
+        echo "    active: dev" >>./application.yml
+        echo "  datasource:" >>./application.yml
+        echo "    url: $DATABASE_URL" >>./application.yml
+        echo "    username: $DATABASE_USERNAME" >>./application.yml
+        echo "    password: $DATABASE_PASSWORD" >>./application.yml
+        echo "    driver-class-name: org.mariadb.jdbc.Driver" >>./application.yml
+        echo "  jpa:" >>./application.yml
+        echo "    properties:" >>./application.yml
+        echo "      hibernate:" >>./application.yml
+        echo "        show_sql: true" >>./application.yml
+        echo "        format_sql: true" >>./application.yml
+        echo "        dialect: org.hibernate.dialect.MariaDBDialect" >>./application.yml
+        echo "    hibernate:" >>./application.yml
+        echo "      ddl-auto: update" >>./application.yml
+        echo "management:" >>./application.yml
+        echo "  endpoints:" >>./application.yml
+        echo "    web:" >>./application.yml
+        echo "      exposure:" >>./application.yml
+        echo "        include: health" >>./application.yml
   build:
     commands:
       - echo Building the Spring Project...
-      - cd hwpSpring
-      - ls
+      - cd ../../..
+      - cat ./src/main/resources/application.yml
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo Build started on `date`

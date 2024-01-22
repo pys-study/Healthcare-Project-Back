@@ -13,6 +13,7 @@ phases:
     commands:
       - echo Building the Spring Project...
       - cd springboot_test
+      - ls
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo Build started on `date`
@@ -24,3 +25,7 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 289850138235.dkr.ecr.ap-northeast-2.amazonaws.com/hwp:latest
+artifacts:
+  files:
+    - springboot_test/appspec.yml
+    - springboot_test/scripts/**

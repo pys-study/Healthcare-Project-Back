@@ -15,4 +15,7 @@ public class HelloWorldController {
     public String helloWorldPathVariable(@PathVariable String id) {
         return String.format("Hello World, %s", id);
     }
+
+    @GetMapping("/hello-world-test")
+    public String helloWorldCICD() { return "CI/CD TEST COMPLETE"; }
 }
